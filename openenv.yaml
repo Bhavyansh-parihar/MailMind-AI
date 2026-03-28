@@ -1,0 +1,49 @@
+version: "1.2.0"
+name: "MailMind AI"
+slug: "mailmind-ai"
+description: >
+  A hackathon-winning RL environment for real-world email management.
+  Features: Explainable AI (Action + Reason), Boss Priority Detection, 
+  Hybrid State Representation (Urgency + Boss + Keywords), and Real-time Learning Visualization.
+type: "real-world-simulation"
+tags: ["rl", "openenv", "llm", "gemini", "explainable-ai", "productivity"]
+author: "Antigravity Engineering"
+
+observation_space:
+  type: "pydantic"
+  schema: "models:Observation"
+
+action_space:
+  type: "pydantic"
+  schema: "models:Action"
+
+reward_range: [-20.0, 30.0]
+reward_highlights:
+  - Boss Priority: +5.0 for correct reply, -5.0 for archive.
+  - Urgency Logic: +2.0 for critical prioritization.
+  - Consequence Penalty: -3.0 for archiving high-impact emails.
+  - Timeliness: +0.5 for quick decisions.
+
+tasks:
+  - id: "easy"
+    name: "Scenario A: Group Filter"
+    difficulty: "easy"
+  - id: "medium"
+    name: "Scenario B: Direct Reports"
+    difficulty: "medium"
+  - id: "ambiguous"
+    name: "Scenario C: Reasoning Stress Test"
+    difficulty: "stress-test"
+
+container:
+  image: "mailmind-ai:v1.2"
+  ports: [7860]
+  env:
+    - OPENAI_API_KEY
+    - GEMINI_API_KEY
+
+endpoints:
+  root: "/"
+  tasks: "/tasks"
+  baseline: "/baseline"
+  grader: "/grader"
