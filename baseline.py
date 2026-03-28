@@ -53,9 +53,9 @@ def run_baseline():
                 "Difficulty": task.difficulty,
                 "Agent": agent_name,
                 "Reward": round(reward, 2),
-                "Score": round(score * 100, 2)
+                "Score": round(float(score), 4)
             })
-            print(f"{agent_name:20}: Reward={reward:6.2f}, Score={score:7.2%}")
+            print(f"{agent_name:20}: Reward={reward:6.2f}, Score={score:6.4f}")
 
     # Output Comparison Table
     df = pd.DataFrame(results)
@@ -70,7 +70,7 @@ def run_baseline():
     # Winner Calculation
     summary = df.groupby("Agent")["Score"].mean().reset_index()
     winner = summary.loc[summary["Score"].idxmax()]
-    print(f"\n🏆 Best Performing Agent: {winner['Agent']} with Average Score: {winner['Score']:.2f}%")
+    print(f"\n🏆 Best Performing Agent: {winner['Agent']} with Average Score: {winner['Score']:.4f}")
 
 if __name__ == "__main__":
     run_baseline()

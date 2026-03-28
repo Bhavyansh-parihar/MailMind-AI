@@ -39,8 +39,9 @@ container:
   image: "mailmind-ai:v1.2"
   ports: [7860]
   env:
-    - OPENAI_API_KEY
-    - GEMINI_API_KEY
+    - API_BASE_URL
+    - MODEL_NAME
+    - HF_TOKEN
 
 endpoints:
   root: "/"

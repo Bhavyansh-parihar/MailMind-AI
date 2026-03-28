@@ -3,105 +3,84 @@
         "Task": "EASY",
         "Difficulty": "Easy",
         "Agent": "Random",
-        "Reward": 10.0,
-        "Score": 40.0
+        "Reward": 11.5,
+        "Score": 0.4
     },
     {
         "Task": "EASY",
         "Difficulty": "Easy",
         "Agent": "Heuristic (Naive)",
-        "Reward": 8.5,
-        "Score": 20.0
-    },
-    {
-        "Task": "EASY",
-        "Difficulty": "Easy",
-        "Agent": "OpenAI (Pro)",
-        "Reward": 8.5,
-        "Score": 20.0
-    },
-    {
-        "Task": "EASY",
-        "Difficulty": "Easy",
-        "Agent": "Gemini (Pro)",
-        "Reward": 8.5,
-        "Score": 20.0
-    },
-    {
-        "Task": "EASY",
-        "Difficulty": "Easy",
-        "Agent": "Q-Learning (Trained)",
-        "Reward": 10.0,
-        "Score": 40.0
-    },
-    {
-        "Task": "MEDIUM",
-        "Difficulty": "Medium",
-        "Agent": "Random",
-        "Reward": 7.5,
+        "Reward": 11.5,
         "Score": 0.0
     },
     {
+        "Task": "EASY",
+        "Difficulty": "Easy",
+        "Agent": "Hackathon-Model",
+        "Reward": 11.5,
+        "Score": 0.0
+    },
+    {
+        "Task": "EASY",
+        "Difficulty": "Easy",
+        "Agent": "Q-Learning (Trained)",
+        "Reward": 7.5,
+        "Score": 0.2
+    },
+    {
+        "Task": "MEDIUM",
+        "Difficulty": "Medium",
+        "Agent": "Random",
+        "Reward": 6.5,
+        "Score": 0.1
+    },
+    {
         "Task": "MEDIUM",
         "Difficulty": "Medium",
         "Agent": "Heuristic (Naive)",
-        "Reward": 16.0,
-        "Score": 70.0
+        "Reward": 28.5,
+        "Score": 0.6
     },
     {
         "Task": "MEDIUM",
         "Difficulty": "Medium",
-        "Agent": "OpenAI (Pro)",
-        "Reward": 16.5,
-        "Score": 70.0
-    },
-    {
-        "Task": "MEDIUM",
-        "Difficulty": "Medium",
-        "Agent": "Gemini (Pro)",
-        "Reward": 16.5,
-        "Score": 70.0
+        "Agent": "Hackathon-Model",
+        "Reward": 28.5,
+        "Score": 0.6
     },
     {
         "Task": "MEDIUM",
         "Difficulty": "Medium",
         "Agent": "Q-Learning (Trained)",
-        "Reward": 16.5,
-        "Score": 10.0
+        "Reward": 17.5,
+        "Score": 0.3
     },
     {
         "Task": "AMBIGUOUS",
         "Difficulty": "Stress Test",
         "Agent": "Random",
-        "Reward": 5.0,
-        "Score": 25.0
+        "Reward": 9.5,
+        "Score": 0.1346
     },
     {
         "Task": "AMBIGUOUS",
         "Difficulty": "Stress Test",
         "Agent": "Heuristic (Naive)",
-        "Reward": 31.0,
-        "Score": 35.71
+        "Reward": 64.0,
+        "Score": 0.4038
     },
     {
         "Task": "AMBIGUOUS",
         "Difficulty": "Stress Test",
-        "Agent": "OpenAI (Pro)",
-        "Reward": 23.5,
-        "Score": 35.0
-    },
-    {
-        "Task": "AMBIGUOUS",
-        "Difficulty": "Stress Test",
-        "Agent": "Gemini (Pro)",
-        "Reward": 30.5,
-        "Score": 41.67
+        "Agent": "Hackathon-Model",
+        "Reward": 64.0,
+        "Score": 0.4038
     },
     {
         "Task": "AMBIGUOUS",
         "Difficulty": "Stress Test",
         "Agent": "Q-Learning (Trained)",
-        "Reward": 7.0,
-        "Score": 31.82
+        "Reward": 35.5,
+        "Score": 0.2115
     }
 ]
