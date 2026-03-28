@@ -1,7 +1,7 @@
 import os
 import json
 from typing import List, Dict, Any, Optional
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Body
 from pydantic import BaseModel
 from env import EmailEnv
 from tasks import get_tasks, grade_ambiguous, grade_easy, grade_medium
@@ -82,7 +82,7 @@ async def grader_endpoint(request: GraderRequest):
         raise HTTPException(status_code=422, detail=f"History parsing error: {str(e)}")
 
 @app.post("/reset")
-async def reset(request: Optional[ResetRequest] = None):
+async def reset(request: ResetRequest = Body(default=ResetRequest())):
     """Resets the environment (POST)."""
     global global_env
     task_id = request.task_id if request else None
@@ -98,7 +98,7 @@ async def reset(request: Optional[ResetRequest] = None):
         
     global_env = EmailEnv(task=selected_task)
     obs, _ = global_env.reset()
-    return obs
+    return obs.model_dump()
 
 @app.post("/step", response_model=StepResult)
 async def step_endpoint(action: Action):
