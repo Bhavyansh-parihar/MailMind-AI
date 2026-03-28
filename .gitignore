@@ -1,0 +1,6 @@
+.env
+__pycache__/
+*.pyc
+results.json
+validation_report.txt
+uv.lock
