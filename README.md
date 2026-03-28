@@ -61,23 +61,27 @@ Our **Hybrid Architecture** delivers the best of both:
 
 ## 🚀 Quick Start
 
-### 1. Set API Keys
+### 1. Set Environment Variables
 ```bash
-export GEMINI_API_KEY="your-google-key"
-export OPENAI_API_KEY="your-openai-key"
+export API_BASE_URL="https://api-inference.huggingface.co/v1"
+export MODEL_NAME="meta-llama/Llama-3.1-8B-Instruct"
+export HF_TOKEN="your_huggingface_token"
 ```
 
-### 2. Run Locally
+### 2. Run Evaluation (Inference)
 ```bash
 pip install -r requirements.txt
+python inference.py
+```
+
+### 3. Run Web UI
+```bash
 streamlit run app.py
 ```
 
-### 3. Training & Simulation
-1. Open the UI.
-2. Use the "RL Training" sidebar to train the Q-Learning agent (100+ episodes).
-3. Switch to "Gemini" for high-stakes scenarios.
-4. Watch the **AI Reasoning** panel for live explanations.
+### 4. Training & Simulation
+1. Use the "RL Training" sidebar in the UI to train the Q-Learning agent.
+2. The **Inference Script** (`inference.py`) provides the final benchmark results in `results.json`.
 
 ---
 *Created for the Scaler X Meta Hackathon by Antigravity Engineering.*
