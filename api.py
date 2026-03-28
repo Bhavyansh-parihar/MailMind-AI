@@ -1,12 +1,15 @@
 import os
 import json
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from env import EmailEnv
 from tasks import get_tasks, grade_ambiguous, grade_easy, grade_medium
-from models import Email, Action, ActionType
+from models import Email, Action, ActionType, ResetRequest, Observation, State, StepResult
 import baseline
+
+# Global environment state
+global_env: Optional[EmailEnv] = None
 
 app = FastAPI(title="MailMind AI API", version="1.2.0")
 
@@ -77,6 +80,43 @@ async def grader_endpoint(request: GraderRequest):
         return {"score": float(score)}
     except Exception as e:
         raise HTTPException(status_code=422, detail=f"History parsing error: {str(e)}")
+
+@app.post("/reset")
+async def reset(request: Optional[ResetRequest] = None):
+    """Resets the environment (POST)."""
+    global global_env
+    task_id = request.task_id if request else None
+    
+    tasks = get_tasks()
+    selected_task = None
+    if task_id:
+        selected_task = next((t for t in tasks if t.name.lower() == task_id.lower()), None)
+    
+    # Default to EASY if not found or not provided
+    if not selected_task:
+        selected_task = next(t for t in tasks if t.name.upper() == "EASY")
+        
+    global_env = EmailEnv(task=selected_task)
+    obs, _ = global_env.reset()
+    return obs
+
+@app.post("/step", response_model=StepResult)
+async def step_endpoint(action: Action):
+    """Executes a step (POST)."""
+    global global_env
+    if global_env is None:
+        raise HTTPException(status_code=400, detail="Environment not reset. Call /reset first.")
+    
+    return global_env.step(action)
+
+@app.get("/state", response_model=State)
+async def get_state_endpoint():
+    """Returns the current state (GET)."""
+    global global_env
+    if global_env is None:
+        raise HTTPException(status_code=400, detail="Environment not reset. Call /reset first.")
+    
+    return global_env.state()
 
 if __name__ == "__main__":
     import uvicorn

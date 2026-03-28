@@ -53,3 +53,6 @@ class State(BaseModel):
     inbox: List[Email]
     history: List[dict]
     stats: dict
+
+class ResetRequest(BaseModel):
+    task_id: Optional[str] = None

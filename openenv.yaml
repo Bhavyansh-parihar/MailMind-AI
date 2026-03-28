@@ -45,5 +45,8 @@ container:
 endpoints:
   root: "/"
   tasks: "/tasks"
+  reset: "/reset"
+  step: "/step"
+  state: "/state"
   baseline: "/baseline"
   grader: "/grader"
