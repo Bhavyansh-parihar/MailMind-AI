@@ -7,106 +7,111 @@ sdk: docker
 pinned: false
 ---
 
-# 🏆 MailMind AI: Pro RL Email Assistant
+# 📬 MailMind AI: Pro RL Email Assistant
 
 [![OpenEnv](https://img.shields.io/badge/OpenEnv-v1.2.0-green)](https://github.com/openenv-spec)
 [![X-Intelligence](https://img.shields.io/badge/Strategy-Hybrid_LLM_+_RL-orange)]()
+[![Hackathon](https://img.shields.io/badge/Scaler_X_Meta-Project-blue)]()
 
-A high-performance, **Explainable Reinforcement Learning** environment for simulating and optimizing real-world email management workflows.
+A high-performance, **Explainable Reinforcement Learning** environment for simulating and optimizing real-world email management workflows. MailMind AI uses a hybrid architecture to deliver deep semantic reasoning combined with deterministic safety and speed.
 
-## 🌟 Hackathon Winning Features
-- **Explainable AI (XAI)**: Every agent action includes a natural language `reasoning` field, displayed in real-time in the UI.
-- **Boss Priority Detection (Wow Factor)**: A dedicated logic layer ensures that emails from the "Boss" are prioritized with a 5x reward weight.
-- **Enriched RL State**: The Q-Learning agent uses a hybrid state representation: `(Urgency, IsBoss, HasKeywords)`, allowing for nuanced decision-making beyond simple urgency.
-- **Gemini-Powered Reasoning**: Uses Gemini 1.5 Flash as the primary intelligence engine for deep semantic analysis of complex emails.
-- **Learning Curves**: Continuous tracking and visualization of agent training progress (Rewards per Episode).
+---
+
+## 🌟 Key Features
+
+- **Explainable AI (XAI)**: Every agent action include a natural language `reasoning` field, providing deep context for every decision (e.g., Identifying hidden deadlines or business impact).
+- **Boss Priority Detection**: Dedicated reward logic (5x weights) ensures that emails from "Boss" are prioritized with high-impact responses.
+- **Hybrid Reasoning Engine**: 
+    - **Deep Semantic Layer**: Leverages Gemini 1.5 Flash (via OpenAI-compatible API) for complex intent analysis.
+    - **Efficiency Layer**: Optimized heuristics and RL (Q-Learning) handle noise and high-volume routing.
+- **OpenEnv Compliant**: Fully implements the [OpenEnv Spec v1.2](https://github.com/openenv-spec), featuring standardized observation/action spaces and grading endpoints.
+- **Real-time Analytics**: Built-in Streamlit UI for monitoring live simulations and agent training performance.
+
+---
 
 ## 🏛️ System Architecture
 
 ```mermaid
 graph TD
-    User((User)) -->|Configures| UI[Streamlit Pro]
-    UI -->|Triggers| Env[EmailEnv v1.2]
+    User((User)) -->|Configures| UI[Streamlit Pro UI]
+    UI -->|Triggers| Env[Gymnasium EmailEnv]
     
     subgraph "Intelligent Agents"
-        G[Gemini - Deep Reasoner]
-        Q[Q-Learning - Optimizer]
-        H[Heuristic - Safety Base]
+        Agent[OpenEnv Hybrid Agent]
+        Agent -->|Primary| LLM(LLM: Deep Reasoner)
+        Agent -->|Safety Fallback| HS(Heuristic Base)
     end
     
-    Env -->|Enriched State| Agents
-    Agents -->|Action + Reason| Env
-    Env -->|Reward| Agents
+    Env -->|Observation Vector| Agent
+    Agent -->|Action + Reason| Env
+    Env -->|Reward + Info| Agent
     
-    subgraph "RL State Enrichment"
+    subgraph "State Enrichment Flow"
         direction LR
-        S1[Urgency] & S2[Boss ID] & S3[Keywords] --> State((State Vector))
+        S1[Urgency] & S2[Boss ID] & S3[Impact Keywords] --> State((State Vector))
     end
 ```
 
-## 🧠 Technical Deep Dive: Why Hybrid?
-Pure LLM agents are powerful but expensive and sometimes slow. Pure RL agents are fast but lack semantic depth. 
-Our **Hybrid Architecture** delivers the best of both:
-1. **Semantic Depth**: Gemini understands *intent* and *subtext*.
-2. **Deterministic Speed**: The Q-Learning agent handles repetitive patterns and noise with micro-second latency.
-3. **Safety Fallback**: Heuristic checks ensure no critical items are ever archived without a secondary reason.
-
-## 📊 Benchmark Results
-
-| Agent | Avg Reward | Task Score | Explainability |
-|-------|------------|------------|----------------|
-| 🥇 **Gemini** | **42.5** | **99.1%** | High (Deep Context) |
-| 🥈 Q-Learning | 31.0 | 90.5% | Medium (Q-Values) |
-| 🥉 Heuristic | 22.8 | 85.0% | Functional |
+---
 
 ## 🚀 Quick Start
 
-### 1. Set Environment Variables
+### 1. Installation
+Ensure you have Python 3.10+ installed.
+
 ```bash
-export API_BASE_URL="https://api-inference.huggingface.co/v1"
-export MODEL_NAME="meta-llama/Llama-3.1-8B-Instruct"
-export HF_TOKEN="your_huggingface_token"
+git clone https://github.com/Bhavyansh-parihar/MailMind-AI
+cd MailMind-AI
+pip install -r requirements.txt
 ```
 
-### 2. Run Evaluation (Inference)
+### 2. Configure Environment
+Create a `.env` file or export the following variables (required for API-based agents):
+
+| Variable | Description | Default / Example |
+| :--- | :--- | :--- |
+| `API_BASE_URL` | Endpoint for the LLM Provider | `https://api-inference.huggingface.co/v1` |
+| `HF_TOKEN` | Your Hugging Face or provider token | `hf_xxxxxxxxxxxxxx` |
+| `MODEL_NAME` | Model ID for reasoning | `meta-llama/Llama-3.1-8B-Instruct` |
+
+### 3. Run the Evaluation
+Launch the hackathon-compliant inference script to generate benchmarking results:
+
 ```bash
-pip install -r requirements.txt
 python inference.py
 ```
+*Results will be saved to `results.json`.*
 
-### 3. Run Web UI
+### 4. Run the OpenEnv Server
+Deploy the API server for remote interactions or external grading tools:
+
 ```bash
-streamlit run app.py
+python -m server.app
 ```
-
-### 4. Training & Simulation
-1. Use the "RL Training" sidebar in the UI to train the Q-Learning agent.
-2. The **Inference Script** (`inference.py`) provides the final benchmark results in `results.json`.
+*API will be available at `http://localhost:7860/`.*
 
 ---
-*Created for the Scaler X Meta Hackathon by Antigravity Engineering.*
 
-## 🚀 Inference Script (Hackathon Compliant)
+## 📂 Project Structure
 
-This project includes a fully compliant `inference.py` script that uses the OpenAI client to connect to any compatible endpoint (Hugging Face, OpenAI, etc.).
+- `api.py`: FastAPI server implementation for OpenEnv.
+- `env.py`: Core Gymnasium environment (`EmailEnv`) with reward logic.
+- `agent.py`: Unified agent implementation (LLM, Heuristic, Random).
+- `tasks.py`: Scenario definitions (Easy, Medium, Ambiguous) and grading logic.
+- `openenv.yaml`: OpenEnv specification manifest.
+- `models.py`: Pydantic schemas for observations, actions, and rewards.
+- `inference.py`: Entry point for compliant evaluation.
 
-### Environment Variables
+---
 
-You can set these variables in your shell or create a `.env` file in the root directory (see `.env.example` for a template).
+## 🎖️ OpenEnv Integration
 
-```bash
-export API_BASE_URL="https://api-inference.huggingface.co/v1"
-export MODEL_NAME="meta-llama/Llama-3.1-8B-Instruct"
-export HF_TOKEN="your_huggingface_token"
-```
+MailMind AI is built natively for **OpenEnv**. It exposes the following key endpoints:
+- `GET /tasks`: List available scenarios.
+- `POST /reset`: Initialize the environment state.
+- `POST /step`: Execute an agent action and retrieve the reward.
+- `POST /grader`: Automated grading of decision history.
 
-### Run Evaluation
+---
+*Created for the **Scaler X Meta Hackathon** by **Antigravity Engineering**.*
 
-```bash
-python inference.py
-```
-
-The script will:
-1. Initialize the OpenAI client with your credentials.
-2. Run the environment across multiple tasks (Easy, Medium, Ambiguous).
-3. Evaluate performance and save results to `results.json`.
