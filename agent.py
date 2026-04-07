@@ -3,7 +3,7 @@ import random
 import json
 from typing import Optional, Dict, Any
 from dotenv import load_dotenv
-import openai
+from openai import OpenAI
 from models import Observation, Action, ActionType, EmailUrgency
 
 # Load environment variables from .env
@@ -13,7 +13,7 @@ def get_compliant_client():
     """Returns an OpenAI client configured via hackathon environment variables."""
     api_base = os.getenv("API_BASE_URL", "https://api-inference.huggingface.co/v1")
     api_key = os.getenv("HF_TOKEN")
-    return openai.OpenAI(base_url=api_base, api_key=api_key)
+    return OpenAI(base_url=api_base, api_key=api_key)
 
 def call_llm(prompt: str, json_mode: bool = False):
     """Unified LLM call function for all agents."""
