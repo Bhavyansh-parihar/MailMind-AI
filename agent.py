@@ -36,7 +36,7 @@ def call_llm(prompt: str, json_mode: bool = False):
         response = client.chat.completions.create(**kwargs)
         return response.choices[0].message.content
     except Exception as e:
-        print(f"Agent LLM Error: {e}")
+        print(f"Agent LLM Error: {e}", flush=True)
         return None
 
 class HeuristicAgent:
@@ -113,7 +113,7 @@ Return JSON:
                 reasoning=data.get("reasoning", "LLM Analysis Completed.")
             )
         except Exception as e:
-            print(f"Parsing error: {e}")
+            print(f"Parsing error: {e}", flush=True)
             return self.fallback.act(obs)
 
 # Keep these for legacy compatibility in baseline.py but redirect to compliant logic
